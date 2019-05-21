@@ -10,33 +10,65 @@ public class AllAnagrams {
         int slength=s.length();
         int plength=p.length();
 
-        //  if(plength>slength)
-        //        return 0;
+        int sum=0;
 
-        StringBuffer sb= new StringBuffer("");
-        char [] check= s.toCharArray();
+        int [] text=new int[26];
+        int [] pattern= new int[26];
 
-        for (int i=0;i<check.length-1;i++)
+        for(int i=0;i<plength;i++)
         {
-            for (int j=0;j<plength;j++)
-            {
-                sb.append(check[j]);
-            }
-
-            if(p.contains(sb))
-            {
-                total.add(i);
-                sb.setLength(0);
-            }
+            pattern[p.charAt(i)-'a']++;
+            text[s.charAt(i)-'a']++;
         }
-        System.out.println(" "+total);
+
+        for (int j=plength;j<slength;j++)
+        {
+           if(checkEqual(text,pattern))
+           {
+               total.add(j-plength);
+
+           }
+            text[s.charAt(j)-'a']++;
+            text[s.charAt(j-plength)-'a']--;
+        }
+
+
         return total;
     }
 
+    private boolean checkEqual(int [] nums1,int[] pat1){
+        for(int i=0;i<26;i++)
+        {
+            if(nums1[i]!=pat1[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     public static void main(String[] args) {
         AllAnagrams allAnagrams=new AllAnagrams();
 
-        allAnagrams.findAnagrams("abcabc", "abc");
+        allAnagrams.findAnagrams("cbaebabacd", "abc");
     }
-
+//   for (int i=0;i<plength;i++)
+//    {
+//        sum+=p.charAt(i)-'0';
+//    }
+//
+//
+//        for(int k=0;k<slength-plength;k++)
+//    {
+//        int l=plength;
+//        int sum2=0;
+//        for (int j=k;l>0;j++)
+//        {
+//            sum2+=s.charAt(j)-'0';
+//            l--;
+//        }
+//        if(sum==sum2)
+//        {
+//            total.add(k);
+//        }
+//    }
 }
